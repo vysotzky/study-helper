@@ -1,7 +1,7 @@
 <template>
     <b-container id="app" class="h-100">
         <div>
-            <h1 class="text-center">Learning Assistant</h1>
+            <h1 class="text-center font-weight-light">Learning Assistant</h1>
             <hr>
             <b-row>
                 <b-col lg="4" class="mb-3">
