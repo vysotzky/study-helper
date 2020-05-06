@@ -6,9 +6,11 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import firebaseConfig from "./firebase.config"
 
-firebase.initializeApp(firebaseConfig);
+const fb = firebase.initializeApp(firebaseConfig);
+const db = fb.firestore()
 
-Vue.prototype.$db = firebase.firestore()
+Vue.prototype.$db = db
+Vue.prototype.$questions = db.collection("questions")
 
 Vue.config.productionTip = false
 
