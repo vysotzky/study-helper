@@ -5,6 +5,12 @@ import router from './router'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import firebaseConfig from "./firebase.config"
+// Import bootstrap
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import './scss/main.scss'
+
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 const fb = firebase.initializeApp(firebaseConfig);
 const db = fb.firestore()
