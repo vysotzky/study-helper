@@ -16,7 +16,7 @@ const fb = firebase.initializeApp(firebaseConfig);
 const db = fb.firestore()
 
 Vue.prototype.$db = db
-Vue.prototype.$questions = db.collection("questions")
+Vue.prototype.$tests = db.collection("tests")
 
 Vue.config.productionTip = false
 
