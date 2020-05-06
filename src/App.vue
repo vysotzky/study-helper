@@ -35,7 +35,7 @@
         name: 'App',
         data () {
             return {
-                alertTime: 4,
+                alertTime: 3,
                 alertCountdown: 0,
                 alertMessage: '',
                 alertType: 'info',
