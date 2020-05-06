@@ -1,26 +1,30 @@
 <template>
     <div>
-        No tests here yet
+        <b-table striped hover :items="tests"></b-table>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'home',
+        name: 'browse',
         data () {
             return {
-                name: ''
+                tests: []
             }
         },
         methods: {
-            add () {
-                this.$questions.add({
-                    question: "1",
-                    answer: "2",
-                })
+            getTests () {
+                return this.$tests.get()
             }
         },
         mounted () {
+            this.getTests().then(query => {
+                query.forEach( (test) =>  {
+                    this.tests.push({
+                        name: test.data().name
+                    })
+                })
+            })
         }
     }
 </script>
