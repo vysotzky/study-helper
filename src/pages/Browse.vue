@@ -28,6 +28,11 @@
                         sortable: true
                     },
                     {
+                        key: 'questions',
+                        label: 'Questions count',
+                        sortable: true
+                    },
+                    {
                         key: 'actions',
                         label: 'Actions',
                         sortable: false
@@ -41,7 +46,7 @@
                 return this.$tests.get().then(query => {
                     query.forEach((test) => {
                         this.tests.push({
-                            id: test.id, name: test.data().name
+                            id: test.id, name: test.data().name, questions: test.data().questions.length
                         })
                     })
                 }).finally(() => this.busy = false)
