@@ -15,7 +15,15 @@
                     </b-list-group>
                 </b-col>
                 <b-col lg="8">
-                    <router-view></router-view>
+                    <router-view @alert="alert"></router-view>
+                    <b-alert class="mt-5"
+                            :show="alertCountdown"
+                            fade
+                            :variant="alertType"
+                            @dismiss-count-down="countdown"
+                    >
+                        {{ alertMessage }}
+                    </b-alert>
                 </b-col>
             </b-row>
         </div>
@@ -25,6 +33,24 @@
 <script>
     export default {
         name: 'App',
+        data () {
+            return {
+                alertTime: 4,
+                alertCountdown: 0,
+                alertMessage: '',
+                alertType: 'info',
+            }
+        },
+        methods: {
+            alert(msg, type='info'){
+                this.alertCountdown = this.alertTime
+                this.alertMessage = msg
+                this.alertType = type
+            },
+            countdown (s) {
+                this.alertCountdown = s
+            }
+        },
     }
 </script>
 
