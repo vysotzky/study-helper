@@ -7,7 +7,13 @@ export default new Router({
     routes: [
         {
             path: '',
-            component: () => import('./pages/Home.vue'),
+            name: 'Browse',
+            component: () => import('./pages/Browse.vue'),
+        },
+        {
+            path: '/create',
+            name: 'Create',
+            component: () => import('./pages/Create.vue'),
         }
     ],
 })
