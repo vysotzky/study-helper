@@ -14,9 +14,9 @@
             <template v-if="currentQuestion">
                 <small>Question</small>
                 <h5 class="mb-3">{{ currentQuestion.question }}</h5>
-                <b-button variant="outline-primary" class="mr-2" @click="answerKnown">I know</b-button>
-                <b-button variant="outline-danger" class="mr-2" @click="answerNotKnown">I don't know</b-button>
-                <b-button variant="outline-info" @click="showAnswer=!showAnswer">{{ showAnswerCaption }}</b-button>
+                <b-button variant="outline-primary" class="m-1" @click="answerKnown">I know</b-button>
+                <b-button variant="outline-danger" class="m-1" @click="answerNotKnown" >I don't know</b-button>
+                <b-button variant="outline-info"   class="m-1" @click="showAnswer=!showAnswer">{{ showAnswerCaption }}</b-button>
             </template>
             <template v-else>
                 <h1 class="mb-3">You finished the test</h1>
