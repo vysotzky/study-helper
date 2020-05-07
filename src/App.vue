@@ -12,6 +12,9 @@
                         <router-link to="/create" v-slot="{ href, route, navigate, isActive }">
                             <b-list-group-item :href="href" @click="navigate" :active="isActive">Create a test</b-list-group-item>
                         </router-link>
+                        <router-link to="/test" v-slot="{ href, route, navigate, isActive }">
+                            <b-list-group-item :href="href" @click="navigate" :active="isActive">Take a test</b-list-group-item>
+                        </router-link>
                     </b-list-group>
                 </b-col>
                 <b-col lg="8">
@@ -51,6 +54,9 @@
                 this.alertCountdown = s
             }
         },
+        created () {
+            this.$eventHub.$on('alert', this.alert)
+        }
     }
 </script>
 

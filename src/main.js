@@ -6,7 +6,7 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import firebaseConfig from "./firebase.config"
 // Import bootstrap
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import './scss/main.scss'
 
 Vue.use(BootstrapVue)
@@ -19,6 +19,18 @@ Vue.prototype.$db = db
 Vue.prototype.$tests = db.collection("tests")
 
 Vue.config.productionTip = false
+
+
+
+Vue.prototype.$eventHub = new Vue();
+
+Vue.mixin({
+    methods: {
+        _alert(...params) {
+            this.$eventHub.$emit('alert', ...params)
+        }
+    }
+})
 
 new Vue({
     router,
