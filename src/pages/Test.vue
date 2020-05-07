@@ -23,8 +23,8 @@
                         </b-button>
                     </div>
                 </div>
-                <div id="answer" v-if="showAnswer">
-                    <textarea></textarea>
+                <div id="answer" v-if="1==1 || showAnswer" class="mt-3">
+                    <editor-content :editor="editor" />
                 </div>
             </template>
             <div v-else>
@@ -36,14 +36,21 @@
 </template>
 
 <script>
+    import { Editor, EditorContent } from 'tiptap'
+    // Rich-text Editor
+
     export default {
         name: 'test',
+        components: {
+            EditorContent
+        },
         data() {
             return {
                 test: null,
                 questions: [],
                 answered: [],
-                showAnswer: false
+                showAnswer: false,
+                editor: null,
             }
         },
         computed: {
@@ -99,6 +106,9 @@
             } else {
                 this.questions = this.shuffle(this.test.questions)
             }
+            this.editor = new Editor({
+                content: '<p>This is just a boring paragraph</p>',
+            })
         },
         watch: {
             questions(questions) {
