@@ -4,11 +4,15 @@
             You don't have any active test.
             <router-link :to="{name: 'Browse'}">Click here to select one.</router-link>
         </h5>
-        <div class="text-center" v-else>
+        <div class="text-center position-relative" v-else>
+            <small>Test name</small>
+            <span class="position-absolute" style="right:0" @click="stopTest">Stop</span>
             <h2>{{test.name}}</h2>
+            <small>Progress</small>
             <h3>{{answered.length}} / {{questions.length}}</h3>
             <hr>
             <template v-if="currentQuestion">
+                <small>Question</small>
                 <h5 class="mb-3">{{ currentQuestion.question }}</h5>
                 <b-button variant="outline-primary" class="mr-2" @click="answerKnown">I know</b-button>
                 <b-button variant="outline-danger" class="mr-2" @click="answerNotKnown">I don't know</b-button>
@@ -68,6 +72,10 @@
             startTest () {
                 this.answered = []
                 this.questions = this.shuffle(this.questions)
+            },
+            stopTest () {
+                localStorage.clear()
+                this.test = null
             },
         },
         mounted () {
