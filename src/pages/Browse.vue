@@ -65,7 +65,7 @@
             },
             takeTest (id) {
                 if (localStorage.test) {
-                    if (!confirm('It will stop the current test. Are you sure?')) {
+                    if (!confirm('Current test will be stopped. Are you sure?')) {
                         return;
                     }
                 }
