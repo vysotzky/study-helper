@@ -5,23 +5,32 @@
             <router-link :to="{name: 'Browse'}">Click here to select one.</router-link>
         </h5>
         <div class="text-center position-relative" v-else>
-            <small>Test name</small>
-            <span class="position-absolute" style="right:0" @click="stopTest">Stop</span>
-            <h2>{{test.name}}</h2>
-            <small>Progress</small>
-            <h3>{{answered.length}} / {{questions.length}}</h3>
-            <hr>
+            <div id="testHeader" class="border-bottom pb-3 mb-3">
+                <small>Test name</small>
+                <span id="stop" @click="stopTest">Stop</span>
+                <h2>{{test.name}}</h2>
+                <small>Progress</small>
+                <h3>{{answered.length}} / {{questions.length}}</h3>
+            </div>
             <template v-if="currentQuestion">
-                <small>Question</small>
-                <h5 class="mb-3">{{ currentQuestion.question }}</h5>
-                <b-button variant="outline-primary" class="m-1" @click="answerKnown">I know</b-button>
-                <b-button variant="outline-danger" class="m-1" @click="answerNotKnown" >I don't know</b-button>
-                <b-button variant="outline-info"   class="m-1" @click="showAnswer=!showAnswer">{{ showAnswerCaption }}</b-button>
+                <div id="question">
+                    <small>Question</small>
+                    <h5 class="mb-3">{{ currentQuestion.question }}</h5>
+                    <div id="buttons" class="mt-1">
+                        <b-button variant="outline-primary" @click="answerKnown">I know</b-button>
+                        <b-button variant="outline-danger" @click="answerNotKnown">I don't know</b-button>
+                        <b-button variant="outline-info" @click="showAnswer=!showAnswer">{{ showAnswerCaption }}
+                        </b-button>
+                    </div>
+                </div>
+                <div id="answer" v-if="showAnswer">
+                    <textarea></textarea>
+                </div>
             </template>
-            <template v-else>
+            <div v-else>
                 <h1 class="mb-3">You finished the test</h1>
                 <b-button variant="primary" class="mr-2" @click="startTest">Restart</b-button>
-            </template>
+            </div>
         </div>
     </div>
 </template>
@@ -29,7 +38,7 @@
 <script>
     export default {
         name: 'test',
-        data () {
+        data() {
             return {
                 test: null,
                 questions: [],
@@ -38,23 +47,23 @@
             }
         },
         computed: {
-            remainingQuestions () {
+            remainingQuestions() {
                 return this.questions.filter((question) => {
                     return !this.answered.includes(question.id)
                 })
             },
-            currentQuestion () {
+            currentQuestion() {
                 if (this.remainingQuestions.length > 0) {
                     return this.remainingQuestions[0]
                 }
                 return null
             },
-            showAnswerCaption () {
+            showAnswerCaption() {
                 return !this.showAnswer ? 'Show the answer' : 'Hide the answer'
             }
         },
         methods: {
-            shuffle (elements) {
+            shuffle(elements) {
                 let m = elements.length, i;
                 while (m) {
                     i = (Math.random() * m--) >>> 0;
@@ -62,23 +71,23 @@
                 }
                 return elements
             },
-            answerKnown () {
+            answerKnown() {
                 this.answered.push(this.currentQuestion.id)
             },
-            answerNotKnown () {
+            answerNotKnown() {
                 const question = this.questions.findIndex(q => q.id === this.currentQuestion.id);
                 this.questions.push(this.questions.splice(question, 1)[0]);
             },
-            startTest () {
+            startTest() {
                 this.answered = []
                 this.questions = this.shuffle(this.questions)
             },
-            stopTest () {
+            stopTest() {
                 localStorage.clear()
                 this.test = null
             },
         },
-        mounted () {
+        mounted() {
             if (localStorage.test) {
                 this.test = JSON.parse(localStorage.test);
             }
@@ -92,12 +101,24 @@
             }
         },
         watch: {
-            questions (questions) {
+            questions(questions) {
                 localStorage.questions = JSON.stringify(questions);
             },
-            answered (answered) {
+            answered(answered) {
                 localStorage.answered = JSON.stringify(answered);
             },
         }
     }
 </script>
+
+<style>
+    div#buttons button {
+        margin: 2px;
+    }
+
+    #stop {
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+    }
+</style>
