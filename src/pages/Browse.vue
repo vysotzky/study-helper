@@ -8,6 +8,7 @@
                 </div>
             </template>
             <template v-slot:cell(actions)="data">
+                <b-button size="sm" variant="primary" @click="takeTest(data.item.id)" class="mr-1">Take</b-button>
                 <b-button size="sm" variant="danger" @click="deleteTest(data.item.id)">Delete</b-button>
             </template>
         </b-table>
@@ -52,12 +53,27 @@
                 }).finally(() => this.busy = false)
             },
             deleteTest (id) {
+                if (!confirm('Are you sure?')) {
+                    return;
+                }
                 this.$tests.doc(id).delete().then(() => {
-                    this.$emit('alert', 'Test deleted', 'success')
+                    this._alert('Test deleted!', 'success')
                     this.tests = this.tests.filter(test => test.id !== id);
                 }).catch(() => {
-                    this.$emit('alert', 'Failed to delete test', 'danger')
+                    this._alert('Couldn\'t delete the test', 'danger')
                 });
+            },
+            takeTest (id) {
+                if (localStorage.test) {
+                    if (!confirm('It will stop the current test. Are you sure?')) {
+                        return;
+                    }
+                }
+                this.$tests.doc(id).get().then((test)=>{
+                    localStorage.clear();
+                    localStorage.test = JSON.stringify(test.data())
+                    this.$router.push({name: "Test"})
+                })
             }
         },
         mounted () {
