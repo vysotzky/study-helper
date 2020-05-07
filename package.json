@@ -40,6 +40,9 @@
     },
     "rules": {}
   },
+  "vue": {
+    "runtimeCompiler": true
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
