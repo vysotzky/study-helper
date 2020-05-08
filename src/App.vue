@@ -2,7 +2,7 @@
     <b-container id="app" class="h-100">
         <div id="header" class="text-center border-bottom mb-3 pb-2">
             <h1 class="font-weight-light">
-                Learning Assistant
+                Study Helper
             </h1>
         </div>
         <b-row>
