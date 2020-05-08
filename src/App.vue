@@ -23,7 +23,7 @@
                 </b-list-group>
             </b-col>
             <b-col lg="8">
-                <router-view @alert="alert"></router-view>
+                <router-view></router-view>
                 <b-alert class="mt-5"
                          :show="alertCountdown"
                          fade
