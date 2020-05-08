@@ -7,7 +7,7 @@
         <div class="text-center position-relative" v-else>
             <div id="testHeader" class="border-bottom pb-3 mb-3">
                 <small>Test name</small>
-                <span id="stop" @click="stopTest">Stop</span>
+                <small class="right" @click="stopTest">Stop this test</small>
                 <h2>{{test.name}}</h2>
                 <small>Progress</small>
                 <h3>{{answered.length}} / {{questions.length}}</h3>
@@ -23,8 +23,13 @@
                         </b-button>
                     </div>
                 </div>
-                <div id="answer" v-if="1==1 || showAnswer" class="mt-3">
-                    <editor-content :editor="editor" />
+                <div id="answer" v-if="showAnswer" class="mt-4 py-3 border-top">
+                    <small class="right" @click="editorMode">{{editCaption}}</small>
+                    <template v-if="!editAnswer">
+                        <div v-if="currentQuestion.answer" v-html="currentQuestion.answer"/>
+                        <span v-else>No answer for this question.</span>
+                    </template>
+                    <editor v-else v-model="editorContent" class="mt-4"/>
                 </div>
             </template>
             <div v-else>
@@ -36,13 +41,12 @@
 </template>
 
 <script>
-    import { Editor, EditorContent } from 'tiptap'
-    // Rich-text Editor
+    import Editor from '../components/Editor.vue'
 
     export default {
         name: 'test',
         components: {
-            EditorContent
+            Editor
         },
         data() {
             return {
@@ -50,7 +54,8 @@
                 questions: [],
                 answered: [],
                 showAnswer: false,
-                editor: null,
+                editAnswer: false,
+                editorContent: ''
             }
         },
         computed: {
@@ -67,6 +72,9 @@
             },
             showAnswerCaption() {
                 return !this.showAnswer ? 'Show the answer' : 'Hide the answer'
+            },
+            editCaption() {
+                return !this.editAnswer ? 'Edit' : 'Save'
             }
         },
         methods: {
@@ -93,6 +101,14 @@
                 localStorage.clear()
                 this.test = null
             },
+            editorMode() {
+                this.editAnswer = !this.editAnswer
+                if (this.editAnswer === false) {
+                    this.currentQuestion.answer = this.editorContent
+                } else {
+                    this.editorContent = this.currentQuestion.answer
+                }
+            },
         },
         mounted() {
             if (localStorage.test) {
@@ -106,9 +122,6 @@
             } else {
                 this.questions = this.shuffle(this.test.questions)
             }
-            this.editor = new Editor({
-                content: '<p>This is just a boring paragraph</p>',
-            })
         },
         watch: {
             questions(questions) {
@@ -126,7 +139,7 @@
         margin: 2px;
     }
 
-    #stop {
+    .right {
         position: absolute;
         right: 0;
         cursor: pointer;
