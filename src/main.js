@@ -8,12 +8,9 @@ import firebaseConfig from "./firebase.config"
 // Import bootstrap
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import './scss/main.scss'
-// Import vue-wysiwyg
-import wysiwyg from "vue-wysiwyg";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(wysiwyg);
 
 const fb = firebase.initializeApp(firebaseConfig);
 const db = fb.firestore()

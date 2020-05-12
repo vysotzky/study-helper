@@ -24,12 +24,7 @@
                     </div>
                 </div>
                 <div id="answer" v-if="showAnswer" class="mt-4 py-3 border-top">
-                    <small class="right" @click="editorMode">{{editCaption}}</small>
-                    <template v-if="!editAnswer">
-                        <div v-if="currentQuestion.answer" v-html="currentQuestion.answer"/>
-                        <span v-else>No answer for this question.</span>
-                    </template>
-                    <editor v-else v-model="editorContent" class="mt-4"/>
+                    <editor v-model="currentQuestion.answer"/>
                 </div>
             </template>
             <div v-else>
@@ -54,7 +49,6 @@
                 questions: [],
                 answered: [],
                 showAnswer: false,
-                editAnswer: false,
                 editorContent: ''
             }
         },
@@ -73,9 +67,6 @@
             showAnswerCaption() {
                 return !this.showAnswer ? 'Show the answer' : 'Hide the answer'
             },
-            editCaption() {
-                return !this.editAnswer ? 'Edit' : 'Save'
-            }
         },
         methods: {
             shuffle(elements) {
@@ -88,10 +79,12 @@
             },
             answerKnown() {
                 this.answered.push(this.currentQuestion.id)
+                this.showAnswer = false
             },
             answerNotKnown() {
                 const question = this.questions.findIndex(q => q.id === this.currentQuestion.id);
                 this.questions.push(this.questions.splice(question, 1)[0]);
+                this.showAnswer = false
             },
             startTest() {
                 this.answered = []
@@ -100,14 +93,6 @@
             stopTest() {
                 localStorage.clear()
                 this.test = null
-            },
-            editorMode() {
-                this.editAnswer = !this.editAnswer
-                if (this.editAnswer === false) {
-                    this.currentQuestion.answer = this.editorContent
-                } else {
-                    this.editorContent = this.currentQuestion.answer
-                }
             },
         },
         mounted() {
