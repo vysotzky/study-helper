@@ -102,6 +102,7 @@
             },
             saveAnswer() {
                 this.currentQuestion.answer = this.editorContent
+                this.$tests.doc(localStorage.testId).set(this.test)
             }
         },
         mounted() {
