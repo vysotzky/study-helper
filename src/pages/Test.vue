@@ -96,7 +96,7 @@
             },
             startTest() {
                 this.answered = []
-                this.questions = this.test.questions
+                this.questions = this.shuffle(this.test.questions)
             },
             stopTest() {
                 localStorage.clear()
@@ -124,9 +124,9 @@
                 }
                 if (localStorage.questions) {
                     this.questions = JSON.parse(localStorage.questions);
-                } else {
-                    this.startTest() // first test load
+                    return;
                 }
+                this.startTest() // first test load
             }
         },
         watch: {
