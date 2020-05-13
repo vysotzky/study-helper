@@ -24,7 +24,10 @@
                     </div>
                 </div>
                 <div id="answer" v-if="showAnswer" class="mt-4 py-3 border-top">
-                    <editor v-model="currentQuestion.answer"/>
+                    <editor v-model="editorContent"/>
+                    <b-button variant="primary" v-if="editorContent != currentQuestion.answer" class="mt-2"
+                              @click="saveAnswer">Save
+                    </b-button>
                 </div>
             </template>
             <div v-else>
@@ -94,6 +97,12 @@
                 localStorage.clear()
                 this.test = null
             },
+            saveToStorage(name, value) {
+                localStorage[name] = JSON.stringify(value)
+            },
+            saveAnswer() {
+                this.currentQuestion.answer = this.editorContent
+            }
         },
         mounted() {
             if (localStorage.test) {
@@ -109,11 +118,20 @@
             }
         },
         watch: {
-            questions(questions) {
-                localStorage.questions = JSON.stringify(questions);
+            questions: {
+                handler(questions) {
+                    this.saveToStorage('questions', questions)
+                },
+                deep: true
+            },
+            currentQuestion: {
+                handler(currentQuestion) {
+                    this.editorContent = currentQuestion.answer
+                },
+                deep: true
             },
             answered(answered) {
-                localStorage.answered = JSON.stringify(answered);
+                this.saveToStorage('answered', answered)
             },
         }
     }
