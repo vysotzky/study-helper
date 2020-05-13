@@ -69,8 +69,9 @@
                         return;
                     }
                 }
+                localStorage.clear();
+                localStorage.batchSize = prompt("Enter batch size")
                 this.$tests.doc(id).get().then((test)=>{
-                    localStorage.clear();
                     localStorage.test = JSON.stringify(test.data())
                     localStorage.testId = id
                     this.$router.push({name: "Test"})

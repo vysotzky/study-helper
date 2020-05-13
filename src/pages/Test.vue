@@ -52,6 +52,7 @@
                 questions: [],
                 answered: [],
                 showAnswer: false,
+                batchSize: 0,
                 editorContent: ''
             }
         },
@@ -85,37 +86,47 @@
                 this.showAnswer = false
             },
             answerNotKnown() {
-                const question = this.questions.findIndex(q => q.id === this.currentQuestion.id);
-                this.questions.push(this.questions.splice(question, 1)[0]);
+                var batchEndQuestionId = this.questions.length - 1
+                if (this.batchSize > 1 && this.remainingQuestions.length > this.batchSize) {
+                    batchEndQuestionId = this.questions.findIndex(q => q.id === this.remainingQuestions[this.batchSize - 1].id);
+                }
+                const questionNotKnownId = this.questions.findIndex(q => q.id === this.currentQuestion.id);
+                this.questions.splice(batchEndQuestionId, 0, this.questions.splice(questionNotKnownId, 1)[0]);
                 this.showAnswer = false
             },
             startTest() {
                 this.answered = []
-                this.questions = this.shuffle(this.questions)
+                this.questions = this.test.questions
             },
             stopTest() {
                 localStorage.clear()
                 this.test = null
             },
+            saveAnswer() {
+                this.currentQuestion.answer = this.editorContent
+                this.test.questions = JSON.parse(JSON.stringify(this.questions)).sort(function (a, b) {
+                    return a.id - b.id  // reverse shuffle
+                });
+                this.$tests.doc(localStorage.testId).set(this.test)
+            },
             saveToStorage(name, value) {
                 localStorage[name] = JSON.stringify(value)
             },
-            saveAnswer() {
-                this.currentQuestion.answer = this.editorContent
-                this.$tests.doc(localStorage.testId).set(this.test)
-            }
         },
         mounted() {
             if (localStorage.test) {
                 this.test = JSON.parse(localStorage.test);
-            }
-            if (localStorage.answered) {
-                this.answered = JSON.parse(localStorage.answered);
-            }
-            if (localStorage.questions) {
-                this.questions = JSON.parse(localStorage.questions);
-            } else {
-                this.questions = this.shuffle(this.test.questions)
+                if (localStorage.answered) {
+                    this.answered = JSON.parse(localStorage.answered);
+                }
+                if (localStorage.batchSize) {
+                    this.batchSize = localStorage.batchSize
+                }
+                if (localStorage.questions) {
+                    this.questions = JSON.parse(localStorage.questions);
+                } else {
+                    this.startTest() // first test load
+                }
             }
         },
         watch: {
@@ -127,7 +138,9 @@
             },
             currentQuestion: {
                 handler(currentQuestion) {
-                    this.editorContent = currentQuestion.answer
+                    if (currentQuestion !== null) {
+                        this.editorContent = currentQuestion.answer
+                    }
                 },
                 deep: true
             },
