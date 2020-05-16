@@ -53,7 +53,6 @@
                 }).catch(function (error) {
                     this.$emit('alert', 'An error occured: ' + error, 'danger')
                 });
-
             }
         }
     }

@@ -126,7 +126,7 @@
                     this.questions = JSON.parse(localStorage.questions);
                     return;
                 }
-                this.startTest() // first test load
+                this.startTest()
             }
         },
         watch: {

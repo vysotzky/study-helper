@@ -19,4 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Project files
 src/firebase.config.js
