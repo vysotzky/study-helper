@@ -1,21 +1,19 @@
 # Study Helper
 
+Study assitant based on a learning technique similar to [flashcards method](https://en.wikipedia.org/wiki/Leitner_system).
+App, written in Vue.js, uses Google Cloud Firestore as its database.
+
+## Demo
+
+![study-helper](https://user-images.githubusercontent.com/22153965/82132825-34a83d00-97e4-11ea-8dd2-2cfc3635b9c9.gif)
+
 ## Project setup
 ```
 npm install
 ```
+Set your *firebase.config.example*, then remove *.example* suffix
 
-### Compiles and hot-reloads for development
+## Compiles and hot-reloads for development
 ```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
