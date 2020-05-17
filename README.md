@@ -1,6 +1,6 @@
 # Study Helper
 
-Study assitant based on a learning technique similar to [flashcards method](https://en.wikipedia.org/wiki/Leitner_system)
+Study assitant based on a learning technique similar to [flashcards method](https://en.wikipedia.org/wiki/Leitner_system)\
 App, written in Vue.js, uses **Google Cloud Firestore** as its database
 
 ## Demo
