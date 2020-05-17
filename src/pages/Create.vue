@@ -5,7 +5,7 @@
                          v-model.trim="test">
         </b-form-textarea>
         <b-form-group label="Test name">
-            <b-form-input v-model.trim="name"></b-form-input>
+            <b-form-input v-model.trim="name" autocomplete="off"></b-form-input>
         </b-form-group>
         <b-button variant="primary" v-if="questions.length>0" @click="createTest">
             Create a test with {{questions.length}} questions
@@ -49,9 +49,9 @@
                 this.$tests.doc(id).set(test).then(() => {
                     this.test = ''
                     this.name = ''
-                    this.$emit('alert', 'Test created', 'success')
+                    this._alert('Test created!', 'success')
                 }).catch(function (error) {
-                    this.$emit('alert', 'An error occured: ' + error, 'danger')
+                    this._alert('An error occured: ' + error, 'danger')
                 });
             }
         }
