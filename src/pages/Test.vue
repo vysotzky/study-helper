@@ -86,6 +86,11 @@
                 this.showAnswer = false
             },
             answerNotKnown() {
+                if (this.editorContent != this.currentQuestion.answer) {
+                    if (!confirm("You haven't saved the answer. Continue?")) {
+                        return;
+                    }
+                }
                 var batchEndQuestionId = this.questions.length - 1
                 if (this.batchSize > 1 && this.remainingQuestions.length > this.batchSize) {
                     batchEndQuestionId = this.questions.findIndex(q => q.id === this.remainingQuestions[this.batchSize - 1].id);
