@@ -6,7 +6,7 @@
             </h1>
         </div>
         <b-row>
-            <b-col lg="4" class="mb-3">
+            <b-col lg="3" class="mb-3">
                 <b-list-group>
                     <router-link to="/" v-slot="{ href, route, navigate, isActive, isExactActive }">
                         <b-list-group-item :href="href" @click="navigate" :active="isExactActive">Browse tests
@@ -22,7 +22,7 @@
                     </router-link>
                 </b-list-group>
             </b-col>
-            <b-col lg="8">
+            <b-col lg="9">
                 <router-view></router-view>
                 <b-alert class="mt-5"
                          :show="alertCountdown"
